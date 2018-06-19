@@ -2,9 +2,6 @@
 #include <memory>
 #include "rbTree.h"
 using namespace std;
-class A{
-
-};
 int main(){
     rbTree tr;
     int x;
