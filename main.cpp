@@ -3,9 +3,8 @@
 #include "bst.h"
 using namespace std;
 int main(){
-    BST<int> tr;
+    BST tr;
     int x;
-    
     int op;
     while(cin>>op>>x){
         if(op == 1){
@@ -13,7 +12,7 @@ int main(){
         }else{
             tr.remove(x);
         }
-            tr.print(tr.root());
+            tr.print(tr.getroot());
         printf("----------------------\n");
     }
 }

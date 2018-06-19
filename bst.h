@@ -1,18 +1,18 @@
-template <typename T>
+#include <iostream>
 class Node{
 public:
-    typedef Node<T>* node_ptr;
-    T val;
+    typedef Node* node_ptr;
+    int val;
     node_ptr left, right, parent;
     Node(){
         left = right = parent = 0;
     }
-    Node(T val):val(val){
+    Node(int val):val(val){
         left = right = parent = 0;
     }
     static node_ptr increment(node_ptr x){
         node_ptr y;
-        if(right == 0){
+        if(x->right == 0){
             y = x->parent;
             while(y != 0 && x == y->right){
                 x = y;
@@ -33,12 +33,11 @@ public:
     }
 };
 
-template <typename T>
 class BST{
     typedef Node::node_ptr node_ptr;
 private:
     node_ptr root;
-    T& val(){
+    int& val(){
         return root->val;
     }
     node_ptr& left(){
@@ -52,10 +51,10 @@ public:
     BST(){
         root = 0;
     }
-    typename node_ptr<T>& root(){
+    node_ptr& getroot(){
         return root;
     }
-    bool insert_equal(T v){
+    bool insert_equal(int v){
         if(root == 0){
             root = new Node();
             root->val = v;
@@ -74,7 +73,7 @@ public:
             return true;
         }
     }
-    bool insert_unique(T v){
+    bool insert_unique(int v){
         if(root == 0){
             root = new Node();
             root->val = v;
@@ -94,7 +93,7 @@ public:
             insert(y, v);
         }
     }
-    void insert(node_ptr x, T v){
+    void insert(node_ptr x, int v){
         node_ptr z = new Node(v);
         if(v < x->val){
             x->left = z;
@@ -104,7 +103,7 @@ public:
         z->parent = x;
         return ;
     }
-    node_ptr find(T v){
+    node_ptr find(int v){
         node_ptr cur = root;
         while(cur){
             if(v == cur->val){
@@ -117,27 +116,28 @@ public:
         }
         return cur;
     }
-    void transplant(ndoe_ptr u, node_ptr v){
+    void transplant(node_ptr u, node_ptr v){
         if(u->parent == 0){
-            root() = v;
+            root = v;
         }else if(u == u->parent->left){
             u->parent->left = v;
         }else {
-            u->parent->left = v;
+            u->parent->right = v;
         }
         if(v) v->parent = u->parent;
     }
-    void remove(T v){
+    void remove(int v){
         node_ptr x = find(v);
         if(x){
-            cout<<"找到:"<<v<<endl;
+            std::cout<<"找到:"<<v<<std::endl;
             if(x->left == 0){
                 transplant(x, x->right);
             }else if(x->right == 0){
                 transplant(x, x->left);
             }else{
-                node_ptr y = x->increment();
-                if(y->parent != z){
+                node_ptr y = Node::increment(x);
+                std::cout<<"increment : "<<y->val<<std::endl;
+                if(y->parent != x){
                     transplant(y, y->right);
                     y->right = x->right;
                     y->right->parent = y;
@@ -151,10 +151,10 @@ public:
     }
     void print(node_ptr cur){
         if(cur == 0){
-            cout<<"#\n";
+            std::cout<<"#\n";
             return;
         }
-        cout<<*(cur->val)<<endl;
+        std::cout<<cur->val<<std::endl;
         print(cur->left);
         print(cur->right);
     }
