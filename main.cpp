@@ -1,15 +1,15 @@
 #include <bits/stdc++.h>
 #include <memory>
-#include "rbTree.h"
+#include "bst.h"
 using namespace std;
 int main(){
-    rbTree tr;
+    BST<int> tr;
     int x;
     
-    char op;
+    int op;
     while(cin>>op>>x){
-        if(op == 'i'){
-            tr.insert(x);
+        if(op == 1){
+            tr.insert_equal(x);
         }else{
             tr.remove(x);
         }
